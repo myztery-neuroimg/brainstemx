@@ -53,5 +53,23 @@ def docx_report(subj:Path,text:str,imgs:list[Path])->Path:
     doc=docx.Document()
     doc.add_heading(f"BrainStemX auto-report – {subj.name}",1)
     doc.add_paragraph(f"Date: {date.today().isoformat()}")
-    for line
+    for line in text.splitlines(): doc.add_paragraph(line)
+    doc.add_page_break(); doc.add_heading("Thumbnails",level=2)
+    for p in imgs:
+        doc.add_paragraph(p.name); doc.add_picture(str(p),width=Inches(4))
+    fp=subj/f"{subj.name}_report.docx"; doc.save(fp); return fp
+
+# ---------- main -------------------------------------------------------------
+def generate(subj_dir:Path, api_key:str):
+    csv_txt=(subj_dir/"analysis.csv").read_text()
+    imgs,blocks=collect_imgs(subj_dir)
+    messages=build_messages(csv_txt,blocks)
+    ai=gpt_dictation(api_key,messages)
+    (subj_dir/"ai_report.txt").write_text(ai)
+    fp=docx_report(subj_dir,ai,imgs)
+    print(f"[✓] Report → {fp}")
+
+if __name__=="__main__":
+    ap=argparse.ArgumentParser(); ap.add_argument("--subj",required=True); ap.add_argument("--key",required=True)
+    args=ap.parse_args(); generate(Path(args.subj),args.key)
 
