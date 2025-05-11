@@ -9,7 +9,7 @@ A key technical advantage is the unsupervised clustering approach that eliminate
 
 ## Technical Features
 
-* **Multimodal Quantitative Analysis** – Implements rigorous coregistration of T1, FLAIR, SWI, and DWI sequences with voxel-wise statistical correlation between lesion clusters and modality-specific signal characteristics. The overlap analysis quantifies T1 hypointensity, SWI susceptibility effects, and DWI signal alterations, providing multidimensional characterization of detected abnormalities that exceeds standard intensity-only approaches.
+* **Multimodal Quantitative Analysis** – Implements coregistration of T1, FLAIR, SWI, and DWI sequences with voxel-wise statistical correlation between lesion clusters and modality-specific signal characteristics. The overlap analysis quantifies T1 hypointensity, SWI susceptibility effects, and DWI signal alterations, providing multidimensional characterization of detected abnormalities that exceeds standard intensity-only approaches.
 
 * **Unsupervised Adaptive Thresholding** – Employs statistical modeling of normal-appearing white matter to establish sequence-specific, patient-adaptive intensity thresholds. This method avoids the limitations of fixed thresholding while eliminating biases introduced by supervised deep learning approaches.
 

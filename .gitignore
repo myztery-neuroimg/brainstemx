@@ -8,6 +8,8 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+unit-test-data-local-only/
+tests/temp_test_data_output/
 build/
 develop-eggs/
 dist/
