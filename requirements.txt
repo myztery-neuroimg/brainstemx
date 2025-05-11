@@ -1,0 +1,14 @@
+numpy>=1.28,<1.29
+scipy>=1.13
+pandas>=2.2
+nibabel>=5.3
+antspyx>=0.5.3
+scikit-image>=0.23
+dash>=2.16
+dash-bootstrap-components>=1.5
+plotly>=5.20
+openai>=1.5
+python-docx>=1.1.2
+pillow>=10.2
+matplotlib>=3.9
+joblib>=1.4
