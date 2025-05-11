@@ -87,6 +87,27 @@ def check_mask(mask:"ants.ANTsImage",min_vox:int,lg,label:str,audit:dict):
     elif vox<min_vox: flag="SMALL"; lg.warning("%s tiny (%d vox)",label,vox)
     audit.setdefault("checks",{})[label]=dict(vox=vox,status=flag)
 
+def check_file_dependencies(required_files: List[Path], lg, context="") -> bool:
+    """Verify all required files exist before proceeding.
+    
+    Args:
+        required_files: List of Path objects that must exist
+        lg: Logger object
+        context: String describing the operation requiring these files
+        
+    Returns:
+        True if all files exist
+        
+    Raises:
+        FileNotFoundError: If any required files are missing
+    """
+    missing = [str(p) for p in required_files if not p.exists()]
+    if missing:
+        msg = f"Missing required files for {context}: {', '.join(missing)}"
+        lg.error(msg)
+        raise FileNotFoundError(msg)
+    return True
+
 # ──────────────────────────────────────────────────────────────────────────────
 # Skull-strip, preprocessing, registration, masks  (functions unchanged from
 # previous response but shortened here for brevity – copy the full v1.2 code).

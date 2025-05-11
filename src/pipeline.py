@@ -4,7 +4,7 @@ Full pipeline with verbose step logging & audit JSON.
 """
 
 from __future__ import annotations
-import json, traceback
+import json, traceback, sys
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -15,6 +15,7 @@ from .core import (Config,get_logger,write_img,check_mask,resample_if_needed,
                    skullstrip,preprocess_flair,preprocess_generic,
                    register_to_t1,brainstem_masks,
                    wm_segmentation,lesion_masks,cluster_metrics,qc_overlay)
+from .validate_inputs import validate_inputs
 
 # ───────────────────────────────────────────────
 def process_subject(subj_id:str, flair_p:Path, t1_p:Optional[Path],
@@ -26,8 +27,12 @@ def process_subject(subj_id:str, flair_p:Path, t1_p:Optional[Path],
     audit={"subject":subj_id,"started":datetime.utcnow().isoformat(),"files":{}}
 
     try:
-        # STEP 0
-        lg.info("STEP 0  ·  load & preprocess FLAIR")
+        # STEP 0a - Validate inputs
+        lg.info("STEP 0a ·  validate input files")
+        validate_inputs(out, flair_p, t1_p, lg, dwi_p, swi_p)
+        
+        # STEP 0b - Preprocess FLAIR
+        lg.info("STEP 0b ·  load & preprocess FLAIR")
         flair_in=ants.image_read(flair_p.as_posix()).astype("float32")
         flair_pp=preprocess_flair(flair_in,cfg,lg)
         write_img(flair_pp,out/"flair_pp.nii.gz","flair_pp",lg,audit)
