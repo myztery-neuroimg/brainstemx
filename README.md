@@ -1,10 +1,10 @@
 # BrainStem X – Intensity-Clustering Pipeline for Brainstem MRI
 
-BrainStem X is an end‑to‑end, **first‑principles** pipeline for detecting and quantifying signal abnormalities throughout the brainstem, with focus on T2‑FLAIR **hyper‑intensity** and T1 **hypo‑intensity** clusters. The analysis treats the brainstem as a whole structural unit, using the Harvard-Oxford atlas for segmentation.
+BrainStem X is an end‑to‑end pipeline for detecting and quantifying signal abnormalities throughout any homogenous brain region, in particular the brainstem, with focus on correlating T2‑FLAIR hyper‑intensity and T1 hypo‑intensity clusters and enabling correlation with other modalities like DWI/SWI. The analysis treats the brainstem or other segmented region as a whole structural unit, using the Harvard-Oxford atlas for segmentation.
 
 This pipeline implements a principled approach to brainstem intensity analysis through rigorous signal normalization and statistical characterization. It integrates classical image processing techniques with multimodal fusion capabilities and comprehensive quality assurance measures – all implemented in Python with computation-intensive operations delegated to optimized ANTs and FSL libraries.
 
-A key technical advantage is the unsupervised clustering approach that eliminates the need for labeled training data, thus avoiding the biases inherent in supervised deep learning methods. This characteristic is particularly important for brainstem lesion detection, where gold-standard segmentations are often unavailable or inconsistent across institutions.
+A key technical advantage is the unsupervised clustering approach that eliminates the need for labeled training data, thus avoiding the biases inherent in supervised deep learning methods.
 
 Status: active development (May 2025)
 
