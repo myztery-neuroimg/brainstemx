@@ -1,11 +1,12 @@
 # BrainStem X – Intensity-Clustering Pipeline for Brainstem MRI
-> **Folder:** `src/` &nbsp; • &nbsp; **Status:** active development (May 2025)
 
 BrainStem X is an end‑to‑end, **first‑principles** pipeline for detecting and quantifying signal abnormalities throughout the brainstem, with focus on T2‑FLAIR **hyper‑intensity** and T1 **hypo‑intensity** clusters. The analysis treats the brainstem as a whole structural unit, using the Harvard-Oxford atlas for segmentation.
 
 This pipeline implements a principled approach to brainstem intensity analysis through rigorous signal normalization and statistical characterization. It integrates classical image processing techniques with multimodal fusion capabilities and comprehensive quality assurance measures – all implemented in Python with computation-intensive operations delegated to optimized ANTs and FSL libraries.
 
 A key technical advantage is the unsupervised clustering approach that eliminates the need for labeled training data, thus avoiding the biases inherent in supervised deep learning methods. This characteristic is particularly important for brainstem lesion detection, where gold-standard segmentations are often unavailable or inconsistent across institutions.
+
+Status: active development (May 2025)
 
 ## Technical Features
 
@@ -21,13 +22,7 @@ A key technical advantage is the unsupervised clustering approach that eliminate
 
 * **Advanced Image Preprocessing** – Implements ANTs N4 bias field correction with modality-specific parameters (separate configurations for FLAIR and other sequences), followed by noise reduction and intensity normalization, ensuring consistent signal characteristics even with diverse acquisition protocols.
 
-* **Optimized Performance** – Machine-specific optimizations including Apple Silicon acceleration via ANTs-on-Metal, with typical processing times of 3-5 minutes per subject on consumer hardware.
-
 * **Multi-level Skull-stripping** – Implements a robust, progressive skull-stripping strategy with ANTs as primary method and SynthStrip fallback for difficult cases, ensuring reliable brain extraction across diverse acquisition protocols.
-
-* **Minimal Dependencies** – Maintains a small footprint with Python code centralized in `src/` directory and limited compiled dependencies (ANTs + FSL only).
-
----
 
 ## Repository layout
 
@@ -47,13 +42,9 @@ README.md
 requirements.txt
 ```
 
-*(If you don’t see `postprocess.py`, you’re missing a file – copy it from the last chat block.)*
-
----
-
 ## Quick install
 
-```bash
+```
 git clone https://github.com/your‑handle/brainstemx.git
 cd brainstemx
 python -m venv .venv && source .venv/bin/activate
@@ -65,11 +56,9 @@ export FSLDIR=/usr/local/opt/fsl
 export PATH="$ANTSPATH:$FSLDIR/bin:$PATH"
 ```
 
----
-
 ## Typical run
 
-```bash
+```
 python -m brainstemx.cli        --flair data/sub‑001_FLAIR.nii.gz        --t1    data/sub‑001_T1w.nii.gz        --out   results/ID01
 
 python -m brainstemx.report_generator --subj results/ID01 --key $OPENAI_API_KEY
@@ -88,27 +77,12 @@ python web_visualiser.py --root results
 
 * The implemented synthetic data framework enables rigorous validation and sensitivity analysis, essential for establishing methodological validity in research contexts.
 
----
-
 ## Code Quality
 
 BrainStem X includes static code analysis support via pylint. The repository includes:
 
 - A comprehensive `.pylintrc` configuration tailored for scientific/neuroimaging code
 - VS Code integration via `.vscode/tasks.json`
-
-To check code quality:
-
-```bash
-# Install development dependencies
-pip install pylint
-
-# Lint a single file
-pylint src/core.py
-
-# Lint the entire codebase
-pylint src
-```
 
 VS Code users can also run the "Lint Current File" or "Lint All Python Files" tasks from the Command Palette.
 
