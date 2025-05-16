@@ -2,11 +2,11 @@
 
 BrainStem X is an end‑to‑end pipeline for detecting and quantifying signal abnormalities throughout any homogenous brain region, in particular the brainstem, with focus on correlating T2‑FLAIR hyper‑intensity and T1 hypo‑intensity clusters and enabling correlation with other modalities like DWI/SWI. The analysis treats the brainstem or other segmented region as a whole structural unit, using the Harvard-Oxford atlas for segmentation.
 
-This pipeline implements a principled approach to brainstem intensity analysis through rigorous signal normalization and statistical characterization. It integrates classical image processing techniques with multimodal fusion capabilities and comprehensive quality assurance measures – all implemented in Python with computation-intensive operations delegated to optimized ANTs and FSL libraries.
+*Status*: this is currently a very unpolished and early iteration, under active development as of May 2025. For a more comprehensive and mature implementation, refer to https://github.com/myztery-neuroimg/brainstemx-full
 
-A key technical advantage is the unsupervised clustering approach that eliminates the need for labeled training data, thus avoiding the biases inherent in supervised deep learning methods.
+This pipeline implements a principled approach to brainstem intensity analysis through signal normalization and statistical characterisation, integrating classical image processing techniques with automated report generation, web-UI and multimodal clustering analysis – all implemented in Python with computation-intensive operations delegated to optimized ANTs and FSL libraries. Synthetic data generation also helps in validation and potentially unrelated training data generation.
 
-Status: this is currently a very unpolished and early iteration, under active development as of May 2025. For a more comprehensive and mature implementation, refer to https://github.com/myztery-neuroimg/brainstemx-full
+A key technical approach is the unsupervised clustering approach - the idea is that a pure first-principals approach to analysis eliminates the need for labeled training data, thus avoiding the biases inherent in supervised deep learning methods on this type of data.
 
 ## Technical Features
 
