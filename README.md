@@ -16,7 +16,7 @@ Status: this is currently a very unpolished and early iteration, under active de
 
 * **Parametric Synthetic Data Generation** – Includes built-in tooling (`generate_synthetic_data.py`) for creating realistic brainstem lesion patterns with configurable spatial and intensity properties. This capability enables rigorous validation of the pipeline's detection characteristics with known ground truth, a crucial component for establishing methodological validity.
 
-* **AI-Enhanced Radiological Reporting** – Integrates quantitative cluster metrics and multiple visualization planes with GPT-4.1-vision to generate structured radiological reports in standardized DOCX format. This implementation bridges the gap between computational analysis and clinical interpretation.
+* **AI-Enhanced Radiological Reporting** – Integrates quantitative cluster metrics and multiple visualization planes with GPT-4.1-vision to generate structured radiological reports in standardized DOCX format. This implementation bridges the gap between computational analysis and research interpretation.
 
 * **Comprehensive Quality Assurance** – Implements metadata validation, geometric verification, and >20 quantitative QA metrics with interactive visualization through a Dash-based 3D browser. The pipeline automatically aborts on critical integrity failures, preventing propagation of input errors.
 
