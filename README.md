@@ -77,6 +77,12 @@ python web_visualiser.py --root results
 
 * The implemented synthetic data framework enables rigorous validation and sensitivity analysis, essential for establishing methodological validity in research contexts.
 
+## Limitations and Requirements
+
+- **Input Requirements**: The pipeline requires 1mm isotropic T1 images for optimal performance, as the brainstem segmentation relies on the Harvard-Oxford atlas in 1mm MNI space.
+- **Atlas Support**: Currently only the Harvard-Oxford atlas is supported for brainstem segmentation. This limitation has benefits, though, it makes the pipeline quite adaptable to other (homogenous) atlas regions with minimal reconfiguration
+- **ANTs Parameters**: Several ANTs registration and processing parameters are hardcoded, this will be fixed in upcoming changes.
+
 ## Code Quality
 
 BrainStem X includes static code analysis support via pylint. The repository includes:
@@ -85,24 +91,6 @@ BrainStem X includes static code analysis support via pylint. The repository inc
 - VS Code integration via `.vscode/tasks.json`
 
 VS Code users can also run the "Lint Current File" or "Lint All Python Files" tasks from the Command Palette.
-
-## Limitations and Requirements
-
-- **Input Requirements**: The pipeline requires 1mm isotropic T1 images for optimal performance, as the brainstem segmentation relies on the Harvard-Oxford atlas in 1mm MNI space.
-- **Atlas Support**: Currently only the Harvard-Oxford atlas is supported for brainstem segmentation.
-- **ANTs Parameters**: Several ANTs registration and processing parameters are hardcoded rather than configurable through the API.
-- **Brainstem Segmentation**: While the code contains references to dorsal/ventral regions, the current implementation uses a simple z-coordinate midpoint split rather than true anatomical subregions.
-- **Registration Quality**: The quality of results is dependent on successful registration between subject and template spaces.
-
-## Freeview helper
-
-The Dash UI prints a one‑click command like
-
-```bash
-freeview -v results/ID01/flair_to_t1.nii.gz          results/ID01/lesion_sd2.0.nii.gz:colormap=heat:opacity=0.5          results/ID01/brainstem_mask.nii.gz:colormap=blue
-```
-
----
 
 ## Citation
 
