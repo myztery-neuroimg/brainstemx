@@ -6,7 +6,7 @@ This pipeline implements a principled approach to brainstem intensity analysis t
 
 A key technical advantage is the unsupervised clustering approach that eliminates the need for labeled training data, thus avoiding the biases inherent in supervised deep learning methods.
 
-Status: active development (May 2025)
+Status: this is currently a very unpolished and early iteration, under active development as of May 2025. For a more comprehensive and mature implementation, refer to https://github.com/myztery-neuroimg/brainstemx-full
 
 ## Technical Features
 
