@@ -24,24 +24,6 @@ A key technical approach is the unsupervised clustering approach - the idea is t
 
 * **Multi-level Skull-stripping** – Implements a robust, progressive skull-stripping strategy with ANTs as primary method and SynthStrip fallback for difficult cases, ensuring reliable brain extraction across diverse acquisition protocols.
 
-## Repository layout
-
-```
-src/
- ├── __init__.py
- ├── core.py                  # utilities, registration, clustering
- ├── validate_inputs.py       # JSON+NIfTI pre‑flight guard
- ├── pipeline.py              # end‑to‑end processing
- ├── qa.py                    # post‑pipeline QA / validation
- ├── postprocess.py           # cluster metrics & csv (see docs)
- ├── report_generator.py      # GPT‑4.1‑vision → DOCX
- ├── generate_synthetic_data.py
- ├── web_visualiser.py        # Dash 3‑plane browser
- └── cli.py                   # batch / single‑subject wrapper
-README.md
-requirements.txt
-```
-
 ## Quick install
 
 ```
@@ -85,7 +67,23 @@ python -m brainstemx.report_generator\
 - **Atlas Support**: Currently only the Harvard-Oxford atlas is supported for brainstem segmentation. This limitation has benefits, though, it makes the pipeline quite adaptable to other (homogenous) atlas regions with minimal reconfiguration
 - **ANTs Parameters**: Several ANTs registration and processing parameters are hardcoded, this will be fixed in upcoming changes.
 
-## Liecence
+## Repository layout
+
+```
+src/
+ ├── core.py                  # utilities, registration, clustering
+ ├── validate_inputs.py       # JSON+NIfTI pre‑flight guard
+ ├── pipeline.py              # end‑to‑end processing
+ ├── qa.py                    # post‑pipeline QA / validation
+ ├── postprocess.py           # cluster metrics & csv (see docs)
+ ├── report_generator.py      # GPT‑4.1‑vision → DOCX
+ ├── generate_synthetic_data.py #Geneation of synthetic data with hyperintense FLAIR cluster(s) of different intensitied and geomorphical attributes along with corresponding hypointense T1 clustering
+ ├── web_visualiser.py        # Dash 3‑plane browser
+ └── cli.py                   # batch / single‑subject wrapper
+requirements.txt
+```
+
+## Licence
 
 MIT licence for BrainStem X; external toolkits keep their own licences.
 
