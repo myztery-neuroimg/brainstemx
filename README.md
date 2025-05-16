@@ -4,53 +4,53 @@ BrainStem X is an end‑to‑end pipeline for detecting and quantifying signal a
 
 *Status*: this is currently a very unpolished and early iteration, under active development as of May 2025. For a more comprehensive and mature implementation, refer to https://github.com/myztery-neuroimg/brainstemx-full
 
+## Technical Features
+
 This pipeline implements a principled approach to brainstem intensity analysis through signal normalization and statistical characterisation, integrating classical image processing techniques with automated report generation, web-UI and multimodal clustering analysis – all implemented in Python with computation-intensive operations delegated to optimized ANTs and FSL libraries. Synthetic data generation also helps in validation and potentially unrelated training data generation.
 
 A key technical approach is the unsupervised clustering approach - the idea is that a pure first-principals approach to analysis eliminates the need for labeled training data, thus avoiding the biases inherent in supervised deep learning methods on this type of data.
 
-## Technical Features
+* **Advanced Preprocessing** of NiFTI standard format neuroimages – Implements ANTs N4 bias field correction with modality-specific parameters (separate configurations for FLAIR and other sequences), followed by noise reduction and intensity normalization, ensuring consistent signal characteristics even with diverse acquisition protocols.
 
-* **Multimodal Quantitative Analysis** – Implements coregistration of T1, FLAIR, SWI, and DWI sequences with voxel-wise statistical correlation between lesion clusters and modality-specific signal characteristics. The overlap analysis quantifies T1 hypointensity, SWI susceptibility effects, and DWI signal alterations, providing multidimensional characterization of detected abnormalities that exceeds standard intensity-only approaches.
+* **Skull-stripping** – Robust, progressive skull-stripping strategy with ANTs as primary method and SynthStrip fallback for difficult cases, advancing brain extraction across acquisition protocols.
 
-* **Unsupervised Adaptive Thresholding** – Employs statistical modeling of normal-appearing white matter to establish sequence-specific, patient-adaptive intensity thresholds. This method avoids the limitations of fixed thresholding while eliminating biases introduced by supervised deep learning approaches.
+* **Multimodal Quantitative Analysis** – coregistration of T1, FLAIR, SWI, and DWI sequences with voxel-wise statistical correlation between modality-specific signal characteristics. The overlap analysis quantifies T1 hypointensity, SWI susceptibility effects, and DWI signal alterations, providing multidimensional characterization of detected abnormalities that exceeds standard intensity-only approaches.
 
-* **Parametric Synthetic Data Generation** – Includes built-in tooling (`generate_synthetic_data.py`) for creating realistic brainstem lesion patterns with configurable spatial and intensity properties. This capability enables rigorous validation of the pipeline's detection characteristics with known ground truth, a crucial component for establishing methodological validity.
+* **Unsupervised Adaptive Thresholding** with statistical modeling of normal-appearing white matter to establish sequence-specific, patient-adaptive intensity thresholds. This method avoids the limitations of fixed thresholding while eliminating biases introduced by supervised deep learning approaches.
+
+* **Comprehensive Quality Assurance** with metadata validation, geometric verification, and >20 quantitative QA metrics with interactive visualization through a Dash-based 3D browser. The pipeline automatically aborts on critical integrity failures, preventing propagation of input errors.
 
 * **AI-Enhanced Radiological Reporting** – Integrates quantitative cluster metrics and multiple visualization planes with GPT-4.1-vision to generate structured radiological reports in standardized DOCX format. This implementation bridges the gap between computational analysis and research interpretation.
 
-* **Comprehensive Quality Assurance** – Implements metadata validation, geometric verification, and >20 quantitative QA metrics with interactive visualization through a Dash-based 3D browser. The pipeline automatically aborts on critical integrity failures, preventing propagation of input errors.
-
-* **Advanced Image Preprocessing** – Implements ANTs N4 bias field correction with modality-specific parameters (separate configurations for FLAIR and other sequences), followed by noise reduction and intensity normalization, ensuring consistent signal characteristics even with diverse acquisition protocols.
-
-* **Multi-level Skull-stripping** – Implements a robust, progressive skull-stripping strategy with ANTs as primary method and SynthStrip fallback for difficult cases, ensuring reliable brain extraction across diverse acquisition protocols.
+* **Parametric Synthetic Data Generation** via `generate_synthetic_data.py` for creating realistic brainstem lesion patterns with configurable spatial and intensity properties.
 
 ## Quick install
 
 ```
 git clone https://github.com/myztery-neuroimg/brainstemx.git
-cd brainstemx
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt    # numpy, nibabel, ants, dash, ...
-pip install synthstrip            # Optional: For fallback skull-stripping
-brew install ants fsl c3d dcm2niix # or apt‑get on Linux
+brew install ants fsl c3d dcm2niix # or apt‑get on Linux, accept licence terms as needed
 export ANTSPATH="/usr/local/opt/ants/bin" #or update as appropriate
 export FSLDIR="/usr/local/opt/fsl" #or update as appropriate
 export PATH="$ANTSPATH:$FSLDIR/bin:$PATH" #or configure via ~/.profile or similar
+cd brainstemx
+uv init; uv venv; uv sync #python -m venv .venv #if not using uv
+source .venv/bin/activate
+uv add -r requirements.txt / uv pip install -r requirements.txt #or pip install -r requirements.txt
 ```
 
 ## Typical run
 
 ```
-python -m brainstemx.cli\
+uv run python -m brainstemx.cli\
  --flair data/sub‑001_FLAIR.nii.gz\
-  --t1    data/sub‑001_T1w.nii.gz\
-  --out   results/ID01
+  --t1   data/sub‑001_T1w.nii.gz\
+  --out  results/ID01
 
-python web_visualiser.py --root results
+uv run python -m brainstemx.web_visualiser.py --root results/ID01
 
-python -m brainstemx.report_generator\
+uv run python -m brainstemx.report_generator\
   --subj results/ID01\
-  --key $OPENAI_API_KEY
+  --key  "$OPENAI_API_KEY"
 ```
 
 ## Components 
