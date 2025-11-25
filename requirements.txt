@@ -1,19 +1,28 @@
+# Core dependencies - required for basic pipeline functionality
 numpy>=1.28,<1.29
 scipy>=1.13
 pandas>=2.2
 nibabel>=5.3
 antspyx>=0.5.3
 scikit-image>=0.23
-dash>=2.16
-dash-bootstrap-components>=1.5
-plotly>=5.20
-openai>=1.5
-python-docx>=1.1.2
-pillow>=10.2
 matplotlib>=3.9
 joblib>=1.4
-# Optional dependencies
-synthstrip>=1.0.0  # Optional: For fallback skull-stripping
+
+# Optional: Web visualization dashboard (dash-based 3D MRI browser)
+# Install with: pip install brainstemx[web]
+# dash>=2.16
+# dash-bootstrap-components>=1.5
+# plotly>=5.20
+
+# Optional: AI-powered report generation (GPT-4 vision + DOCX export)
+# Install with: pip install brainstemx[reports]
+# openai>=1.5
+# python-docx>=1.1.2
+
+# Optional: Fallback skull-stripping when ANTs fails
+# Install with: pip install brainstemx[synthstrip]
+# synthstrip>=1.0.0
 
 # Development dependencies
-pylint>=3.0.0  # For code quality checking
+# Install with: pip install brainstemx[dev]
+# pylint>=3.0.0
