@@ -115,7 +115,7 @@ def _register_callbacks(app):
 
             # Fall back to first available modality
             mod = available_mods[0]
-            file_path = p/base_path(p, mod)
+            file_path = base_path(p, mod)
             if file_path is None:  # Should never happen but just for safety
                 return 100, 100, 100, go.Figure(), ""
 
