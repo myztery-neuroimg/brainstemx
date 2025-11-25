@@ -1,8 +1,9 @@
 """
 brainstemx.report_generator – GPT-4.1 vision → .docx
 
-Requirements:
-    pip install openai>=1.5 python-docx pandas pillow
+Requirements (optional):
+    pip install brainstemx[reports]
+    # or: pip install openai>=1.5 python-docx
 """
 
 from __future__ import annotations
@@ -10,13 +11,30 @@ import base64, argparse, sys, logging
 from datetime import date
 from pathlib import Path
 from typing import List, Dict, Tuple, Optional, Any
-import pandas as pd, openai, docx
-from docx.shared import Inches
 import nibabel as nib, numpy as np, matplotlib.pyplot as plt
 
 from .core import check_file_dependencies
 
+# Optional report generation dependencies
+try:
+    import openai
+    import docx
+    from docx.shared import Inches
+    REPORTS_AVAILABLE = True
+except ImportError:
+    REPORTS_AVAILABLE = False
+    openai = docx = Inches = None
+
 MODEL = "gpt-4.1-vision-preview"
+
+def _check_report_deps():
+    """Check if report generation dependencies are available."""
+    if not REPORTS_AVAILABLE:
+        raise ImportError(
+            "Report generation dependencies not installed.\n"
+            "Install with: pip install brainstemx[reports]\n"
+            "Or manually: pip install openai>=1.5 python-docx"
+        )
 
 # ---------- helpers ----------------------------------------------------------
 def to_b64(p:Path)->str:
@@ -98,21 +116,25 @@ def check_prerequisites(subj_dir: Path) -> None:
 # ---------- main -------------------------------------------------------------
 def generate(subj_dir: Path, api_key: str) -> Optional[Path]:
     """Generate a radiology report using GPT-4.1-vision model.
-    
+
     Args:
         subj_dir: Path to the subject's output directory
         api_key: OpenAI API key
-        
+
     Returns:
         Path to the generated DOCX report, or None if generation failed
-        
+
     Raises:
+        ImportError: If report generation dependencies are not installed
         FileNotFoundError: If required files are missing
         ValueError: If API key is invalid
         Exception: For other errors during report generation
     """
+    # Check dependencies first
+    _check_report_deps()
+
     log = logging.getLogger("report_generator")
-    
+
     try:
         # Verify prerequisites
         check_prerequisites(subj_dir)
