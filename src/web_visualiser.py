@@ -91,7 +91,7 @@ def _register_callbacks(app):
     @app.callback(
         Output("subj", "options"),
         Input("init-interval", "n_intervals"))
-    def populate_subjects(n):
+    def populate_subjects(_n):
         """Populate subject dropdown after ROOT is initialized."""
         return subj_opts()
     
