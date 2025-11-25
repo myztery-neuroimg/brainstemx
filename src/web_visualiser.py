@@ -58,10 +58,11 @@ def _get_app():
 def _create_layout():
     """Create the Dash app layout."""
     return dbc.Container([
+        dcc.Interval(id="init-interval", interval=100, max_intervals=1),
         dbc.Row([
             dbc.Col([
                 html.H4("BrainStemX UI v5"),
-                dcc.Dropdown(id="subj", options=subj_opts(), placeholder="select subject"),
+                dcc.Dropdown(id="subj", options=[], placeholder="select subject"),
                 html.H6("Modality"),
                 dcc.Dropdown(id="mod", options=[
                     {"label":"FLAIR","value":"flair"},
@@ -87,6 +88,13 @@ def _create_layout():
 
 def _register_callbacks(app):
     """Register callbacks for the Dash app."""
+    @app.callback(
+        Output("subj", "options"),
+        Input("init-interval", "n_intervals"))
+    def populate_subjects(_n):
+        """Populate subject dropdown after ROOT is initialized."""
+        return subj_opts()
+    
     @app.callback(
         Output("sl_x","max"),Output("sl_y","max"),Output("sl_z","max"),
         Output("view","figure"),Output("cmd","children"),
