@@ -26,3 +26,4 @@ joblib>=1.4
 # Development dependencies
 # Install with: pip install brainstemx[dev]
 # pylint>=3.0.0
+# pip-audit>=2.7.0  # Run: pip-audit to check for security vulnerabilities

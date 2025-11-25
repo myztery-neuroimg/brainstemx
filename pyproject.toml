@@ -39,12 +39,16 @@ synthstrip = [
 ]
 # Development tools
 dev = [
-  "pylint>=3.0.0"
+  "pylint>=3.0.0",
+  "pip-audit>=2.7.0"  # Security vulnerability scanning
 ]
 # Install all optional features
 all = [
   "brainstemx[web,reports,synthstrip,dev]"
 ]
+
+[project.scripts]
+brainstemx = "brainstemx.cli:main"
 
 [build-system]
 requires = ["uv>=0.1.32"]
