@@ -11,7 +11,6 @@ import base64, argparse, sys, logging
 from datetime import date
 from pathlib import Path
 from typing import List, Dict, Tuple, Optional, Any
-import pandas as pd
 import nibabel as nib, numpy as np, matplotlib.pyplot as plt
 
 from .core import check_file_dependencies
